@@ -2,6 +2,8 @@ import { isEquals, getTransform } from './helper'
 import React, { PropTypes, Component } from 'react'
 import { StyleSheet, View } from 'react-native'
 
+const lineBoldSize = 8
+
 export default class Line extends Component {
     constructor(props) {
         super(props);
@@ -22,7 +24,6 @@ export default class Line extends Component {
     render() {
         console.log(this.state)
         let { start, end, color } = this.state;
-
         if ( isEquals(start, end) ) return null;
 
         let transform = getTransform(start, end);
@@ -33,7 +34,7 @@ export default class Line extends Component {
 
         return (
             <View ref='line' style={[
-                styles.line, {backgroundColor: color, left: start.x, top: start.y, width: length},
+                styles.line, {backgroundColor: color, left: start.x, top: start.y - (lineBoldSize / 2 - 1), width: length},
                 {transform: [{translateX: moveX}, {translateY: moveY}, {rotateZ: angle}]}
             ]} />
         )
@@ -53,7 +54,7 @@ Line.propTypes = {
 }
 
 Line.defaultProps = {
-    color: '#8E91A8',
+    color: '#bbbbbb',
     start: {x: 0, y: 0},
     end: {x: 0, y: 0}
 }
@@ -61,7 +62,7 @@ Line.defaultProps = {
 const styles = StyleSheet.create({
     line: {
         position: 'absolute',
-        height: 1
+        height: lineBoldSize
     }
 })
 
